@@ -97,6 +97,34 @@ namespace AventyrligaKontakter.Model.ContactDal
             return null;
         }
 
+       public void InsertContact(Contact contact)
+       {
+           using (SqlConnection conn = createConnection())
+           {
+               try
+               {
+                   SqlCommand cmd = new SqlCommand("Person.uspAddContact", conn);
+                   cmd.CommandType = CommandType.StoredProcedure;
+
+                   cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 30).Value = contact.FirstName;
+                   cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 30).Value = contact.LastName;
+                   cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 6).Value = contact.EmailAdress;
+
+                  //hämtar ut PK
+                   cmd.Parameters.Add(@"ContactID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+
+                   conn.Open();
+
+                   cmd.ExecuteNonQuery();
+
+                   contact.ContactId = (int)cmd.Parameters["ContactID"].Value;
+               }
+               catch
+               {
+                   throw new ApplicationException("Hoppsan!");
+               }
+           }
+       }
         public void UpdateContact(Contact contact)
         {
             using (SqlConnection conn = createConnection())
