@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Defauktaspx.aspx.cs" Inherits="AventyrligaKontakter.Defauktaspx" ViewStateMode="Disabled" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="AventyrligaKontakter.Default" ViewStateMode="Disabled" %>
 
 <!DOCTYPE html>
 

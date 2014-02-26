@@ -10,7 +10,7 @@
 namespace AventyrligaKontakter {
     
     
-    public partial class Defauktaspx {
+    public partial class Default {
         
         /// <summary>
         /// form1 control.

@@ -145,6 +145,5 @@ namespace AventyrligaKontakter.Model.ContactDal
             }
         }
 
-
     }
 }

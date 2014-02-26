@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace AventyrligaKontakter
 {
-    public partial class Defauktaspx : System.Web.UI.Page
+    public partial class Default : System.Web.UI.Page
     {
         private Service _service;
 

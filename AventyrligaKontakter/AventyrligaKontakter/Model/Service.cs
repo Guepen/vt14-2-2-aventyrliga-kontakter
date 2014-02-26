@@ -27,7 +27,8 @@ namespace AventyrligaKontakter.Model
 
         public Contact GetContact(int contactId)
         {
-            return ContactDAL.GetContact(contactId);
+            //return ContactDAL.GetContact(contactId);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Contact> GetContacts()
@@ -42,7 +43,7 @@ namespace AventyrligaKontakter.Model
 
         public void SaveContact(Contact contact)
         {
-            if (contact.ContactId == 0)
+            /*if (contact.ContactId == 0)
             {
                 ContactDAL.InsertContact(contact);
             }
@@ -50,7 +51,7 @@ namespace AventyrligaKontakter.Model
             else
             {
                 ContactDAL.UpdateContact(contact);
-            }
+            }*/
         }
     }
 }
