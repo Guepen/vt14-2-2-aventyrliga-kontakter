@@ -13,6 +13,10 @@
             ItemType="AventyrligaKontakter.Model.Contact"
             UpdateMethod="ListView1_UpdateItem"
             SelectMethod="ListView1_GetData"
+            InsertMethod="ListView1_InsertItem"
+            DeleteMethod="ListView1_DeleteItem"
+            InsertItemPosition="FirstItem"
+            ViewStateMode="Enabled"
             DataKeyNames="ContactID">
               <LayoutTemplate>
                     <table class="grid">
@@ -49,6 +53,51 @@
                             <asp:LinkButton ID="LinkButton2" runat="server" CommandName="Delete" Text="Ta Bort" CausesValidation="false "/>
                         </td>
                         </ItemTemplate>
+            <EmptyDataTemplate>
+                    <%-- Detta visas då kunduppgifter saknas i databasen. --%>
+                    <table class="grid">
+                        <tr>
+                            <td>
+                                Kontaktuppgifter saknas.
+                            </td>
+                        </tr>
+                    </table>
+                </EmptyDataTemplate>
+             <InsertItemTemplate>
+                    <tr>
+                        <td>
+                            <asp:TextBox ID="Name" runat="server" Text='<%# BindItem.FirstName %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="Address" runat="server" Text='<%# BindItem.LastName %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="PostalCode" runat="server" Text='<%# BindItem.EmailAdress %>' />
+                        </td>
+                        <td>
+                            <asp:LinkButton ID="LinkButton3" runat="server" CommandName="Insert" Text="Lägg till" />
+                            <asp:LinkButton ID="LinkButton4" runat="server" CommandName="Cancel" Text="Rensa" CausesValidation="false" />
+                        </td>
+                    </tr>
+                </InsertItemTemplate>
+            <EditItemTemplate>
+                    <tr>
+                        <td>
+                            <asp:TextBox ID="Name" runat="server" Text='<%# BindItem.FirstName %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="Address" runat="server" Text='<%# BindItem.LastName %>' />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="PostalCode" runat="server" Text='<%# BindItem.EmailAdress %>' class="postal-code" />
+                        </td>
+                        <td>
+                            <%-- "Kommandknappar" för att uppdatera en kunduppgift och avbryta. Kommandonamnen är VIKTIGA! --%>
+                            <asp:LinkButton ID="LinkButton5" runat="server" CommandName="Update" Text="Spara" />
+                            <asp:LinkButton ID="LinkButton6" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false" />
+                        </td>
+                    </tr>
+                </EditItemTemplate>
         </asp:ListView>
     </div>
     </form>

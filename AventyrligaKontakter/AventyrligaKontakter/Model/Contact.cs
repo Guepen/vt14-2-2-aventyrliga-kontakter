@@ -15,7 +15,8 @@ namespace AventyrligaKontakter.Model
        
         [Required(ErrorMessage = "Ett efternamn måste anges.")]
         public string LastName { get; set; }
-        [EmailAddress]
+
+        
         public string EmailAdress { get; set; }
     }
 }

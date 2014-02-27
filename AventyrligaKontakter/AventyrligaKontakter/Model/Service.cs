@@ -17,18 +17,17 @@ namespace AventyrligaKontakter.Model
 
         public void DeleteContact(Contact contact)
         {
-            throw new NotImplementedException();
+            DeleteContact(contact.ContactId);
         }
 
         public void DeleteContact(int contactId)
         {
-            throw new NotImplementedException();
+            ContactDAL.DeleteContact(contactId);
         }
 
         public Contact GetContact(int contactId)
         {
-            //return ContactDAL.GetContact(contactId);
-            throw new NotImplementedException();
+            return ContactDAL.GetContact(contactId);
         }
 
         public IEnumerable<Contact> GetContacts()
@@ -43,7 +42,7 @@ namespace AventyrligaKontakter.Model
 
         public void SaveContact(Contact contact)
         {
-            /*if (contact.ContactId == 0)
+            if (contact.ContactId == 0)
             {
                 ContactDAL.InsertContact(contact);
             }
@@ -51,7 +50,7 @@ namespace AventyrligaKontakter.Model
             else
             {
                 ContactDAL.UpdateContact(contact);
-            }*/
+            }
         }
     }
 }

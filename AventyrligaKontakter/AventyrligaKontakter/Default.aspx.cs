@@ -49,5 +49,32 @@ namespace AventyrligaKontakter
                 Service.SaveContact(contact);
             }
         }
+
+        public void ListView1_InsertItem(Contact contact)
+        {
+            try
+            {
+                Service.SaveContact(contact);
+            }
+
+            catch
+            {
+                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade vid försök till att lägga till kontakt");
+            }
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void ListView1_DeleteItem(int contactID)
+        {
+            try
+            {
+                Service.DeleteContact(contactID);
+            }
+
+            catch
+            {
+                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade vid försök till att radera kontakt");
+            }
+        }
     }
 }
