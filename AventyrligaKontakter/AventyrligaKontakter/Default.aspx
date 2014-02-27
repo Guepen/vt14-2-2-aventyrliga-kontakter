@@ -8,6 +8,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+        <asp:PlaceHolder ID="Message" runat="server" Visible="false">
+            <p>Kontakten lades till</p>
+        </asp:PlaceHolder>
     <div>
         <asp:ListView ID="ListView1" runat="server" 
             ItemType="AventyrligaKontakter.Model.Contact"
@@ -16,7 +20,6 @@
             InsertMethod="ListView1_InsertItem"
             DeleteMethod="ListView1_DeleteItem"
             InsertItemPosition="FirstItem"
-            ViewStateMode="Enabled"
             DataKeyNames="ContactID">
               <LayoutTemplate>
                     <table class="grid">
@@ -35,6 +38,15 @@
                         </tr>
                         <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
                          </table>
+                  <asp:DataPager ID="DataPager" runat="server">
+                      <Fields>
+                        <asp:NextPreviousPagerField ShowFirstPageButton="True" FirstPageText=" << "
+                            ShowNextPageButton="False" ShowPreviousPageButton="False"  />
+                        <asp:NumericPagerField />
+                        <asp:NextPreviousPagerField ShowLastPageButton="True" LastPageText=" >> "
+                            ShowNextPageButton="False" ShowPreviousPageButton="False"  />
+                    </Fields>
+                </asp:DataPager>
                 </LayoutTemplate>
              <ItemTemplate>
                     <%-- Mall för nya rader. --%>
@@ -89,7 +101,7 @@
                             <asp:TextBox ID="Address" runat="server" Text='<%# BindItem.LastName %>' />
                         </td>
                         <td>
-                            <asp:TextBox ID="PostalCode" runat="server" Text='<%# BindItem.EmailAdress %>' class="postal-code" />
+                            <asp:TextBox ID="PostalCode" runat="server" Text='<%# BindItem.EmailAdress %>' />
                         </td>
                         <td>
                             <%-- "Kommandknappar" för att uppdatera en kunduppgift och avbryta. Kommandonamnen är VIKTIGA! --%>

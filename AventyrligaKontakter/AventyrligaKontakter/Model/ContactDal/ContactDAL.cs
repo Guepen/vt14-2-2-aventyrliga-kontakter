@@ -100,6 +100,62 @@ namespace AventyrligaKontakter.Model.ContactDal
             }
         }
 
+        public IEnumerable<Contact> GetContactsPageWise(int maximumRows, int startRowIndex, out int totalRowcount)
+        {
+            using (var conn = createConnection())
+            {
+                try
+                {
+                    
+                    
+                    var contacts = new List<Contact>(100);
+
+                    var cmd = new SqlCommand("Person.uspGetContactsPageWise", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@PageIndex", SqlDbType.Int).Value = (startRowIndex / maximumRows) + 1;
+                    cmd.Parameters.Add("@PageSize", SqlDbType.Int).Value = maximumRows;
+                    cmd.Parameters.Add(@"RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        //tar reda på vilket index kolumnerna har
+                        var contactIdIndex = reader.GetOrdinal("ContactID");
+                        var firstNameIndex = reader.GetOrdinal("FirstName");
+                        var lastNameIndex = reader.GetOrdinal("LastName");
+                        var emailIndex = reader.GetOrdinal("EmailAddress");
+
+                        while (reader.Read())
+                        {
+                            contacts.Add(new Contact
+                            {
+                                ContactId = reader.GetInt32(contactIdIndex),
+                                FirstName = reader.GetString(firstNameIndex),
+                                LastName = reader.GetString(lastNameIndex),
+                                EmailAdress = reader.GetString(emailIndex)
+
+
+                            });
+                        }
+                    }
+
+                    // avallokerar minne som inte används
+                    contacts.TrimExcess();
+
+                    totalRowcount = (int)cmd.Parameters["RecordCount"].Value;
+
+                    return contacts;
+                }
+
+                catch
+                {
+                    throw new ApplicationException("Det gick inte att hämta kontaktuppgifter från databasen");
+                }
+            }
+        }
+
         public void InsertContact(Contact contact)
         {
             using (SqlConnection conn = createConnection())
@@ -111,7 +167,7 @@ namespace AventyrligaKontakter.Model.ContactDal
 
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 30).Value = contact.FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 30).Value = contact.LastName;
-                    cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 6).Value = contact.EmailAdress;
+                    cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAdress;
 
                     //hämtar ut PK
                     cmd.Parameters.Add(@"ContactID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
@@ -140,7 +196,7 @@ namespace AventyrligaKontakter.Model.ContactDal
 
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 30).Value = contact.FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 30).Value = contact.LastName;
-                    cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 6).Value = contact.EmailAdress;
+                    cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAdress;
                     cmd.Parameters.Add(@"ContactID", SqlDbType.Int, 4).Value = contact.ContactId;
 
                     conn.Open();

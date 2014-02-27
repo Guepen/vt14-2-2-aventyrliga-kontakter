@@ -18,6 +18,11 @@ namespace AventyrligaKontakter
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Success"] as bool? == true)
+            {
+                Message.Visible = true;
+                Session.Remove("Success");
+            }
 
         }
 
@@ -27,9 +32,9 @@ namespace AventyrligaKontakter
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
-        public IEnumerable <Contact> ListView1_GetData()
+        public IEnumerable <Contact> ListView1_GetData(int maximumRows, int startRowIndex, out int totalRowcount)
         {
-            return Service.GetContacts();
+            return Service.GetContactsPageWise(maximumRows, startRowIndex, out totalRowcount);
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
@@ -55,6 +60,7 @@ namespace AventyrligaKontakter
             try
             {
                 Service.SaveContact(contact);
+                Response.Redirect("~/");
             }
 
             catch

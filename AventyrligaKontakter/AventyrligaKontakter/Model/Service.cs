@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace AventyrligaKontakter.Model
 {
@@ -37,11 +38,21 @@ namespace AventyrligaKontakter.Model
 
         public IEnumerable<Contact> GetContactsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
         {
-             throw new NotImplementedException();
+            return ContactDAL.GetContactsPageWise(maximumRows, startRowIndex, out totalRowCount);
         }
 
         public void SaveContact(Contact contact)
         {
+
+            ICollection<ValidationResult> validationResults;
+
+            if (!contact.Validate(out validationResults))
+            {
+                var ex = new ValidationException("Objektet klarade inte valideringen.");
+                ex.Data.Add("ValidationResults", validationResults);
+                throw ex;
+            }
+
             if (contact.ContactId == 0)
             {
                 ContactDAL.InsertContact(contact);
