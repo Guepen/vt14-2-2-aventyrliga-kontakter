@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\style.css" />
     <Content Include="Default.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

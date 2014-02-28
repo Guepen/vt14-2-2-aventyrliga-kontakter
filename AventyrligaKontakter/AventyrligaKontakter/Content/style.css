@@ -1,0 +1,45 @@
+﻿body {
+}
+form {
+    margin-left:35px;
+    margin-top:20px;
+    font-style:italic;
+}
+
+.Table {
+    max-height:200px;
+    border:2px solid black;
+    margin-left:20%;
+}
+
+.tHead {
+    background-color:orange;
+    padding:2px;
+}
+
+.Table th {
+    background-color:orange;
+    width:150px;
+}
+
+.Table td {
+    text-align:center;
+    vertical-align:middle;
+}
+
+#ValidationSummary2, #ValidationSummary3{
+    color:red;
+    font-weight:bold;
+    margin-left:20%;
+}
+
+#DataPager {
+    margin-left:20%;
+}
+
+.Message {
+    color:green;
+    font-weight:bold;
+     margin-left:20%;
+}
+

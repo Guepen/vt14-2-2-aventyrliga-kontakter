@@ -18,6 +18,7 @@ namespace AventyrligaKontakter
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (Session["Success"] as bool? == true)
             {
                 Message.Visible = true;
@@ -26,22 +27,15 @@ namespace AventyrligaKontakter
 
         }
 
-        // The return type can be changed to IEnumerable, however to support
-        // paging and sorting, the following parameters must be added:
-        //     int maximumRows
-        //     int startRowIndex
-        //     out int totalRowCount
-        //     string sortByExpression
         public IEnumerable <Contact> ListView1_GetData(int maximumRows, int startRowIndex, out int totalRowcount)
         {
             return Service.GetContactsPageWise(maximumRows, startRowIndex, out totalRowcount);
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
         public void ListView1_UpdateItem(int ContactID)
         {
             var contact = Service.GetContact(ContactID);
-            // Load the item here, e.g. item = MyDataLayer.Find(id);
+        
             if (contact == null)
             {
                 // The item wasn't found
@@ -52,31 +46,33 @@ namespace AventyrligaKontakter
             if (TryUpdateModel(contact))
             {
                 Service.SaveContact(contact);
+                Message.Visible = true;
             }
         }
 
         public void ListView1_InsertItem(Contact contact)
         {
-            try
+            if (ModelState.IsValid)
             {
-                Service.SaveContact(contact);
-                Response.Redirect("~/");
-            }
-
-            catch
-            {
-                ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade vid försök till att lägga till kontakt");
+                try
+                {
+                    Session["Success"] = true;
+                    Service.SaveContact(contact);
+                    Response.Redirect("~/");
+                }
+                catch
+                {
+                    ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade vid försök till att lägga till kontakt");
+                }
             }
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
         public void ListView1_DeleteItem(int contactID)
         {
             try
             {
                 Service.DeleteContact(contactID);
             }
-
             catch
             {
                 ModelState.AddModelError(String.Empty, "Ett oväntat fel inträffade vid försök till att radera kontakt");
